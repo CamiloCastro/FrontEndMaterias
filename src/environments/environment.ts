@@ -10,4 +10,5 @@
 
 export const environment = {
   production: false,
+  url_api_gateway: "http://localhost:7777",  
 };
