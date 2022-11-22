@@ -15,9 +15,13 @@ export class EstudianteService {
     return this.clienteHttp.get<Estudiante[]>(`${environment.url_api_gateway}/estudiante`);
   }
 
-  eliminar() {}
+  eliminar(id: string) : Observable<Estudiante> {
+    return this.clienteHttp.delete<Estudiante>(`${environment.url_api_gateway}/estudiante/${id}`);
+  }
 
-  crear() {}
+  crear(nuevo_estudiante: Estudiante): Observable<Estudiante> {
+    return this.clienteHttp.post<Estudiante>(`${environment.url_api_gateway}/estudiante`, nuevo_estudiante);
+  }
 
   actualizar() {}
 
