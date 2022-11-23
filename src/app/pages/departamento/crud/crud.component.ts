@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { EstudianteService } from '../../../servicios/estudiante.service';
+import { DepartamentoService } from '../../../servicios/departamento.service';
 
 @Component({
-  selector: 'ngx-listar',
-  templateUrl: './listar.component.html',
-  styleUrls: ['./listar.component.scss']
+  selector: 'ngx-crud',
+  templateUrl: './crud.component.html',
+  styleUrls: ['./crud.component.scss']
 })
-export class ListarComponent implements OnInit {
+export class CrudComponent implements OnInit {
 
-  constructor(private servicioEstudiante: EstudianteService, private router: Router) { }
+  constructor(private departamentoServicio: DepartamentoService) { }
 
   settings = {
     add: {
@@ -40,21 +39,18 @@ export class ListarComponent implements OnInit {
         title: 'Nombre',
         type: 'string',
       },
-      apellido: {
-        title: 'Apellido',
-        type: 'string',
-      },
-      cedula: {
-        title: 'Cedula',
-        type: 'string',
-      },
+      descripcion: {
+        title: 'Descripcion',
+        type: 'number',
+      },      
     }
   }
+  
   source = []
 
   ngOnInit(): void {
 
-    this.servicioEstudiante.listar().subscribe(
+    this.departamentoServicio.listar().subscribe(
       data => {
         this.source = data;
       }
@@ -64,11 +60,11 @@ export class ListarComponent implements OnInit {
 
   deleteConfirm(event) {
 
-    let estudiante_a_eliminar = event.data;
+    let departamentoEliminar = event.data;
 
     Swal.fire({
-      title: 'Eliminar Estudiante',
-      text: "¿Está seguro que quiere eliminar al estudiante " + estudiante_a_eliminar.nombre + "?",
+      title: 'Eliminar Departamento',
+      text: "¿Está seguro que quiere eliminar el departamento " + departamentoEliminar.nombre + "?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -77,11 +73,11 @@ export class ListarComponent implements OnInit {
     }).then((result) => {
 
       if(result.isConfirmed) {
-        this.servicioEstudiante.eliminar(estudiante_a_eliminar._id).subscribe(
+        this.departamentoServicio.eliminar(departamentoEliminar._id).subscribe(
           data => {
             Swal.fire(
               'Eliminado!',
-              'El estudiante ha sido eliminado correctamente',
+              'El departamento ha sido eliminado correctamente',
               'success'
             )
             event.confirm.resolve();
@@ -91,15 +87,16 @@ export class ListarComponent implements OnInit {
     })    
   }
 
-  createConfirm(event) {    
+  createConfirm(event) {
 
-    let nuevo_estudiante = event.newData;
-    delete nuevo_estudiante["_id"]
-    this.servicioEstudiante.crear(nuevo_estudiante).subscribe(
+    let nuevoDepartamento = event.newData;
+
+    delete nuevoDepartamento["_id"]
+    this.departamentoServicio.crear(nuevoDepartamento).subscribe(
       data => {
         Swal.fire(
           'Creado!',
-          'El estudiante ha sido creado correctamente',
+          'El departamento ha sido creado correctamente',
           'success'
         )
         event.confirm.resolve(data);
@@ -109,11 +106,11 @@ export class ListarComponent implements OnInit {
 
   editConfirm(event) {
 
-    let estudianteActualizar = event.newData;
+    let departamentoActualizar = event.newData;
 
     Swal.fire({
-      title: 'Editar Estudiante',
-      text: "¿Está seguro que quiere editar al estudiante " + estudianteActualizar.nombre + "?",
+      title: 'Editar Departamento',
+      text: "¿Está seguro que quiere editar el departamento " + departamentoActualizar.nombre + "?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -122,11 +119,11 @@ export class ListarComponent implements OnInit {
     }).then((result) => {
 
       if(result.isConfirmed) {
-        this.servicioEstudiante.actualizar(estudianteActualizar).subscribe(
+        this.departamentoServicio.actualizar(departamentoActualizar).subscribe(
           data => {
             Swal.fire(
               'Editado!',
-              'El estudiante ha sido editado correctamente',
+              'El departamento ha sido editado correctamente',
               'success'
             )
             event.confirm.resolve();
@@ -137,4 +134,5 @@ export class ListarComponent implements OnInit {
 
 
   }
+
 }

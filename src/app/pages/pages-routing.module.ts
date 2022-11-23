@@ -11,6 +11,16 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: 'materia',
+      loadChildren: () => import('./materia/materia.module')
+        .then(m => m.MateriaModule),
+    },
+    {
+      path: 'departamento',
+      loadChildren: () => import('./departamento/departamento.module')
+        .then(m => m.DepartamentoModule),
+    },
+    {
       path : 'seguridad',
       loadChildren: () => import('./seguridad/seguridad.module')
         .then(m => m.SeguridadModule),

@@ -23,7 +23,10 @@ export class EstudianteService {
     return this.clienteHttp.post<Estudiante>(`${environment.url_api_gateway}/estudiante`, nuevo_estudiante);
   }
 
-  actualizar() {}
+  actualizar(datosActualizar: Estudiante): Observable<Estudiante> {
+    let id = datosActualizar._id;
+    return this.clienteHttp.put<Estudiante>(`${environment.url_api_gateway}/estudiante/${id}`, datosActualizar);
+  }
 
 
 }
