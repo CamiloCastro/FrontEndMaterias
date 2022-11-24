@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { MateriaRoutingModule } from './materia-routing.module';
 import { CrudComponent } from './crud/crud.component';
+import { NbCardModule, NbIconModule } from '@nebular/theme';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { CrudComponent } from './crud/crud.component';
   ],
   imports: [
     CommonModule,
-    MateriaRoutingModule
+    MateriaRoutingModule,
+    NbCardModule,
+    Ng2SmartTableModule,
+    NbIconModule,
   ]
 })
 export class MateriaModule { }
