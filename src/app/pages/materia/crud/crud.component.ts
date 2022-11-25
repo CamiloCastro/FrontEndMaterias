@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MateriaService } from '../../../servicios/materia.service';
+import { SeguridadService } from '../../../servicios/seguridad.service';
 
 @Component({
   selector: 'ngx-crud',
@@ -9,7 +11,8 @@ import { MateriaService } from '../../../servicios/materia.service';
 })
 export class CrudComponent implements OnInit {
 
-  constructor(private materiaServicio: MateriaService) { }  
+  constructor(private materiaServicio: MateriaService, private router: Router,
+    private servicioSeguridad: SeguridadService) { }  
 
   settings = {
     columns: {
@@ -51,6 +54,18 @@ export class CrudComponent implements OnInit {
   source = []
 
   ngOnInit(): void {
+
+    if(!this.servicioSeguridad.sesionExiste())
+    {
+      this.router.navigate(["pages/seguridad/login"]);
+    }
+
+    this.servicioSeguridad.getUsuarioPorId(this.servicioSeguridad.usuarioSesionActiva._id).subscribe(
+      response => {            
+        if(response.rol.nombre === "Estudiante")
+          this.router.navigate(["pages/inscripcion/listar"]);        
+      }
+    )
 
     this.materiaServicio.listar().subscribe(
       data => {

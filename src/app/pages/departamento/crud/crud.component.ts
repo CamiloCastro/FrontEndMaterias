@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { DepartamentoService } from '../../../servicios/departamento.service';
+import { SeguridadService } from '../../../servicios/seguridad.service';
 
 @Component({
   selector: 'ngx-crud',
@@ -9,7 +11,8 @@ import { DepartamentoService } from '../../../servicios/departamento.service';
 })
 export class CrudComponent implements OnInit {
 
-  constructor(private departamentoServicio: DepartamentoService) { }
+  constructor(private departamentoServicio: DepartamentoService,
+     private servicioSeguridad: SeguridadService, private router: Router) { }
 
   settings = {
     add: {
@@ -49,6 +52,24 @@ export class CrudComponent implements OnInit {
   source = []
 
   ngOnInit(): void {
+
+    if(!this.servicioSeguridad.sesionExiste())
+    {
+      this.router.navigate(["pages/seguridad/login"]);
+    }
+
+    this.servicioSeguridad.getUsuarioPorId(this.servicioSeguridad.usuarioSesionActiva._id).subscribe(
+      response => {            
+        console.log(response)
+        if(response.rol.nombre === "Estudiante")
+        {
+          console.log("Es estudiante")
+          this.router.navigate(["pages/inscripcion/listar"]);        
+        }
+          
+      }
+    )
+
 
     this.departamentoServicio.listar().subscribe(
       data => {

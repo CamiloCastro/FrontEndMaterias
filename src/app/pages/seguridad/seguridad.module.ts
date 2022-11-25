@@ -17,11 +17,13 @@ import {
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule as ngFormsModule } from '@angular/forms';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
   declarations: [
-    LoginComponent    
+    LoginComponent,
+    LogoutComponent    
   ],
   imports: [
     ngFormsModule,

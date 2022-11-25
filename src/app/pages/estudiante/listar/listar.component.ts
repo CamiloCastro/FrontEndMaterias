@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EstudianteService } from '../../../servicios/estudiante.service';
+import { SeguridadService } from '../../../servicios/seguridad.service';
 
 @Component({
   selector: 'ngx-listar',
@@ -10,7 +11,8 @@ import { EstudianteService } from '../../../servicios/estudiante.service';
 })
 export class ListarComponent implements OnInit {
 
-  constructor(private servicioEstudiante: EstudianteService, private router: Router) { }
+  constructor(private servicioEstudiante: EstudianteService, private router: Router,
+    private servicioSeguridad: SeguridadService) { }
 
   settings = {
     add: {
@@ -53,6 +55,18 @@ export class ListarComponent implements OnInit {
   source = []
 
   ngOnInit(): void {
+
+    if(!this.servicioSeguridad.sesionExiste())
+    {
+      this.router.navigate(["pages/seguridad/login"]);
+    }
+
+    this.servicioSeguridad.getUsuarioPorId(this.servicioSeguridad.usuarioSesionActiva._id).subscribe(
+      response => {            
+        if(response.rol.nombre === "Estudiante")
+          this.router.navigate(["pages/inscripcion/listar"]);        
+      }
+    )
 
     this.servicioEstudiante.listar().subscribe(
       data => {

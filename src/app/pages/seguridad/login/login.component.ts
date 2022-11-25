@@ -18,10 +18,21 @@ export class LoginComponent implements OnInit {
   password? :string
 
   ngOnInit(): void {
+
+    if(this.servicioSeguridad.sesionExiste()) {
+      this.servicioSeguridad.getUsuarioPorId(this.servicioSeguridad.usuarioSesionActiva._id).subscribe(
+        response => {            
+          if(response.rol.nombre === "Administrador")
+            this.router.navigate(["pages/estudiantes/listar"]);
+          else
+            this.router.navigate(["pages/inscripcion/listar"]);
+        }
+      )
+    }    
+
   }
 
-  login(): void {
-    console.log("Usuario: " + this.usuario + " Contraseña: " + this.password)
+  login(): void {   
 
     let u: Usuario = {
       correo: this.usuario,
@@ -30,8 +41,20 @@ export class LoginComponent implements OnInit {
 
     this.servicioSeguridad.login(u).subscribe(
       data => {
+        console.log(data)
         this.servicioSeguridad.guardarDatosSesion(data);
-        this.router.navigate(["pages/dashboard"]);
+
+        this.servicioSeguridad.getUsuarioPorId(data.user_id).subscribe(
+          response => {            
+            if(response.rol.nombre === "Administrador")
+              this.router.navigate(["pages/estudiantes/listar"]);
+            else
+              this.router.navigate(["pages/inscripcion/listar"]);
+          }
+        )
+
+
+        
       },
       error => {
         Swal.fire({

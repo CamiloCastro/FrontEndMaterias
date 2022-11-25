@@ -71,5 +71,9 @@ export class SeguridadService {
 
   }
 
+  getUsuarioPorId(id: string): Observable<Usuario> {
+    return this.clienteHttp.get<Usuario>(`${environment.url_api_gateway}/usuario/${id}`);
+  }
+
 
 }

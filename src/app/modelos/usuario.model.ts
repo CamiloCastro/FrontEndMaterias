@@ -5,5 +5,7 @@ export class Usuario {
     correo?: string
     contrasena?: string
     token?: string
+    rol?: any
+    user_id?: string
 
 }

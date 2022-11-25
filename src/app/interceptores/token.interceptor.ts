@@ -29,7 +29,16 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         if(err.status == 401) {
-          this.router.navigateByUrl("/pages/seguridad/login");
+
+          if(err.error["msg"] === "Token has expired" || err.error["msg"] === "Missing Authorization Header")
+          {
+            this.servicioSeguridad.logout();
+            this.router.navigateByUrl("/pages/seguridad/login");
+          }
+          else {
+            
+          }
+          
         }
         return throwError(err)
       })
