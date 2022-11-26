@@ -11,6 +11,11 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: 'inscripcion',
+      loadChildren: () => import('./inscripcion/inscripcion.module')
+        .then(m => m.InscripcionModule),
+    },
+    {
       path: 'materia',
       loadChildren: () => import('./materia/materia.module')
         .then(m => m.MateriaModule),

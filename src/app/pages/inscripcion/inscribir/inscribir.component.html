@@ -1,0 +1,44 @@
+<nb-card>
+    <nb-card-header>
+        Inscribir materias
+    </nb-card-header>
+
+    <nb-card-body>
+
+        <div class="row">
+            <div class="col-2">
+                <label>Buscar nombre: </label>
+            </div>
+            <div class="col-6">
+                <input class="form-control" type="text" [(ngModel)]="nombreMateria" />
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-primary" (click)="buscarMateria()">Buscar</button>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Creditos</th>
+                    <th>Departamento</th>
+                    <th>Inscribir</th>
+                </tr>
+
+                <tr *ngFor="let materia of materias">
+                    <td>{{materia.nombre}}</td>                    
+                    <td>{{materia.creditos}}</td>                    
+                    <td>{{materia.departamento.nombre}}</td>      
+                    <td><button type="button" class="btn btn-primary" 
+                        (click)="registrarMateria(materia._id)">Inscribir</button></td>
+                </tr>
+            </table>
+        </div>
+
+    </nb-card-body>
+
+</nb-card>
+

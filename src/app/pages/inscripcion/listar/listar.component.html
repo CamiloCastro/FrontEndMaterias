@@ -1,0 +1,29 @@
+<nb-card>
+    <nb-card-header>
+        Materias inscritas
+    </nb-card-header>
+
+    <nb-card-body>        
+
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Creditos</th>
+                    <th>Departamento</th>
+                    <th>Eliminar</th>
+                </tr>
+
+                <tr *ngFor="let inscripcion of inscripciones">
+                    <td>{{inscripcion.materia.nombre}}</td>                    
+                    <td>{{inscripcion.materia.creditos}}</td>                    
+                    <td>{{inscripcion.materia.departamento.nombre}}</td>      
+                    <td><button type="button" class="btn btn-primary" 
+                        (click)="eliminarInscripcion(inscripcion._id)">Eliminar</button></td>
+                </tr>
+            </table>
+        </div>
+
+    </nb-card-body>
+
+</nb-card>

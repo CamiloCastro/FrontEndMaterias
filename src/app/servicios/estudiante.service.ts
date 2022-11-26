@@ -28,5 +28,9 @@ export class EstudianteService {
     return this.clienteHttp.put<Estudiante>(`${environment.url_api_gateway}/estudiante/${id}`, datosActualizar);
   }
 
+  buscarPorCedula(cedula: string): Observable<Estudiante> {
+    return this.clienteHttp.get<Estudiante>(`${environment.url_api_gateway}/estudiante/cedula/${cedula}`);
+  }
+
 
 }

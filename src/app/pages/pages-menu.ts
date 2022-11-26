@@ -23,9 +23,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "briefcase-outline"
   },
   {
-    title: "Inscripcion",
-    link: "/pages/inscripcion/listar",
-    icon: "clipboard-outline"
+    title: "Inscripcion",    
+    icon: "clipboard-outline",
+    children: [
+    {
+      title: "Listar",
+      link: "/pages/inscripcion/listar"
+    },
+    {
+      title: "Inscribir",
+      link: "/pages/inscripcion/inscribir"
+    },    
+  ]
   },
   {
     title: "Logout",

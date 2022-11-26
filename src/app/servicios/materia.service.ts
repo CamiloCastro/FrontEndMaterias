@@ -28,5 +28,8 @@ export class MateriaService {
     return this.clienteHttp.delete<Materia>(`${environment.url_api_gateway}/materia/${id}`);
   }
 
+  buscarNombre(nombre: string): Observable<Materia[]> {
+    return this.clienteHttp.get<Materia[]>(`${environment.url_api_gateway}/materia/nombre/${nombre}`);
+  }
 
 }

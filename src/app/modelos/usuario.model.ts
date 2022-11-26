@@ -7,5 +7,6 @@ export class Usuario {
     token?: string
     rol?: any
     user_id?: string
+    cedula?: string
 
 }
